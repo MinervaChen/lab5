@@ -14,15 +14,45 @@
 
     returns undefined (array is sorted in place)
 */
+$(function() {
+    sortObjArray(Employees.entries, "last");
+    $(".sort-ui .btn").click(sortBy);
+});
+
+function sortBy(handler) {
+    var sortMethod = $(this).attr("data-sortby"); 
+    sortObjArray(Employees.entries, sortMethod);    
+}
+
+function render(entries) {
+    var template = $(".template");
+    var abook = $(".address-book");
+    //empties out the address book
+    abook.empty();
+
+    //goes through each entry and insert it into the book
+    for(int i = 0; i < entries.length; i++) {
+        var instance = template.clone();
+        instance.find(".first").html(this.first);
+        instance.find(".last").html(this.last);
+        instance.find("title").html(this.title);
+        instance.find('.dept').attr({
+            src: this.pic,
+            alt: 'Picture of ' + this.first + this.last
+        instance.removeClass("template");
+        a-book.append(instance);*
+    });
+}
+
 function sortObjArray(objArray, propName) {
     if (!objArray.sort)
         throw new Error('The objArray parameter does not seem to be an array (no sort method)');
 
     //sort the array supplying a custom compare function
-    objArray.sort(function(a,b) {
-        
+    objArray.sort(function(a, b) {
+
         //note: this compares only one property of the objects
-        //see the optional step where you can add support for 
+        //see the optional step where you can add support for
         //a secondary sort key (i.e., sort by another property)
         //if the first property values are equal
         if (a[propName] < b[propName])
@@ -32,5 +62,8 @@ function sortObjArray(objArray, propName) {
         else
             return 1;
     });
-} //sortObjArray()
 
+    render(Employees.entries);  
+} 
+
+//I am sort of confused about this lab, but I tried my best-- nothing is showing up :(
